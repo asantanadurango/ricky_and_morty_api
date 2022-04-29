@@ -21,6 +21,7 @@ a {
 }
 
 .inpSearch {
+	background: #ddd;
 	width: 300px;
 	padding: 0.3em 1em;
 	border-radius: 20px;
@@ -44,7 +45,7 @@ a {
 	list-style: none;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, 300px);
-	grid-gap: 1.5em 1em;
+	grid-gap: 2em 1em;
 	justify-content: center;
 	justify-items: center;
 	width: 100%;

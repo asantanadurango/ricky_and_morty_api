@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import getAllData from '../services/getAllData';
 import Card from './Card';
 import { nanoid } from 'nanoid';
 import Pagination from './Pagination';
 const Cardlist = () => {
+	const id = useId();
 	const [currentPageIdx, setCurrentPageIdx] = useState(1);
 	const [keyword, setKeyword] = useState('');
 	const [info, setInfo] = useState({});
@@ -12,12 +13,10 @@ const Cardlist = () => {
 	const handlerInputText = e => setKeyword(e.target.value);
 
 	const handlerNextPage = _ => {
-		setResults([]);
 		setCurrentPageIdx(currentPageIdx + 1);
 		window.scrollTo(0, 0);
 	};
 	const handlerDownPage = _ => {
-		setResults([]);
 		setCurrentPageIdx(currentPageIdx - 1);
 		window.scrollTo(0, 0);
 	};
@@ -45,9 +44,9 @@ const Cardlist = () => {
 			<h3 className='current-page-idx'>Page #{currentPageIdx}</h3>
 			<Pagination up={handlerNextPage} down={handlerDownPage} idx={currentPageIdx} />
 			<ul className='characterList'>
-				{results.map(({ name, status, species, gender, image, episode }) => (
+				{results.map(({ name, status, species, gender, image, episode }, idx) => (
 					<Card
-						key={nanoid()}
+						key={`${id}-${idx}`}
 						name={name}
 						status={status}
 						species={species}
