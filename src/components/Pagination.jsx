@@ -1,17 +1,16 @@
-import React from 'react';
-
 const Pagination = ({ up, down, info }) => {
-	// console.log(info);
 	return (
 		<div className='pagination'>
-			{
+			{info.prev && (
 				<button onClick={down} className='btn-pagination'>
 					PREV
 				</button>
-			}
-			<button onClick={up} className='btn-pagination'>
-				NEXT
-			</button>
+			)}
+			{info.next && (
+				<button onClick={up} className='btn-pagination'>
+					NEXT
+				</button>
+			)}
 		</div>
 	);
 };

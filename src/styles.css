@@ -4,10 +4,14 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--primaryColor: #ddd;
+}
+
 body {
 	font-size: 16px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	color: #ddd;
+	color: var(--primaryColor);
 }
 
 #root {
@@ -20,8 +24,12 @@ a {
 	text-decoration: none;
 }
 
+.labelSearch {
+	font-size: 1.3em;
+}
+
 .inpSearch {
-	background: #ddd;
+	background-color: var(--primaryColor);
 	width: 300px;
 	padding: 0.3em 1em;
 	border-radius: 20px;
@@ -29,6 +37,11 @@ a {
 	-moz-border-radius: 20px;
 	-ms-border-radius: 20px;
 	-o-border-radius: 20px;
+}
+
+.numberPage {
+	font-size: 1.5em;
+	color: var(--primaryColor);
 }
 
 .itemsCharacterWrapper {
@@ -60,16 +73,18 @@ a {
 
 .pagination,
 .characterList,
-.current-page-idx {
+.numberPage {
 	margin: 0.8em;
 }
 
 .btn-pagination {
+	cursor: pointer;
 	background: rgb(18 163 21);
-	color: #fff;
+	color: var(--primaryColor);
 	border: none;
 	margin: 0 0.9em;
-	padding: 0.1em 1em;
+	padding: 0.2em 1.3em;
+	font-weight: 800;
 	border-radius: 2em;
 	-webkit-border-radius: 2em;
 	-moz-border-radius: 2em;

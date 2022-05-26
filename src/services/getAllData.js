@@ -1,15 +1,10 @@
-const getAllData = async (keyword = 1) => {
+const getAllData = async (keyword = 'https://rickandmortyapi.com/api/character') => {
 	let results;
-	if (typeof keyword === 'string') {
-		console.log(keyword);
+	if (!keyword.includes('https://')) {
 		const res = await fetch(`https://rickandmortyapi.com/api/character/?name=${keyword}`);
-		if (res.status !== 200) {
-			const redirec = await fetch(`https://rickandmortyapi.com/api/character/?page=${1}`);
-			return await redirec.json();
-		}
 		results = await res.json();
 	} else {
-		const res = await fetch(`https://rickandmortyapi.com/api/character/?page=${keyword}`);
+		const res = await fetch(keyword);
 		results = await res.json();
 	}
 	return results;

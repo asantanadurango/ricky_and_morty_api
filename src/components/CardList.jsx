@@ -1,11 +1,9 @@
 import { useState, useEffect, useId } from 'react';
 import getAllData from '../services/getAllData';
 import Card from './Card';
-import { nanoid } from 'nanoid';
 import Pagination from './Pagination';
 const Cardlist = () => {
 	const id = useId();
-	const [currentPageIdx, setCurrentPageIdx] = useState(1);
 	const [keyword, setKeyword] = useState('');
 	const [info, setInfo] = useState({});
 	const [results, setResults] = useState([]);
@@ -13,36 +11,39 @@ const Cardlist = () => {
 	const handlerInputText = e => setKeyword(e.target.value);
 
 	const handlerNextPage = _ => {
-		setCurrentPageIdx(currentPageIdx + 1);
+		getData(info.next);
 		window.scrollTo(0, 0);
 	};
 	const handlerDownPage = _ => {
-		setCurrentPageIdx(currentPageIdx - 1);
+		getData(info.prev);
 		window.scrollTo(0, 0);
 	};
 
-	const getDAta = async param => {
+	const getData = async param => {
 		const data = await getAllData(param);
 		setResults(data.results);
 		setInfo(data.info);
 	};
 
-	// Udated keyword
+	// mounted and Udated keyword
 	useEffect(() => {
-		getDAta(keyword);
+		getData(keyword);
 	}, [keyword]);
 
-	// Mounted and update currentPageIdx
-	useEffect(() => {
-		getDAta(currentPageIdx);
-	}, [currentPageIdx]);
+	const numerPage = () => {
+		let n = info.next ? info.next?.split('=')[1] : info.prev?.split('=')[1];
+		typeof n === 'string' && (n = n.replace('&name', ''));
+		return info.next ? Number(n) - 1 : Number(n) + 1;
+	};
 
 	return (
 		<div className='container-list'>
-			<label htmlFor='inpSeacrh'>Search</label>
+			<label className='labelSearch' htmlFor='inpSeacrh'>
+				Search
+			</label>
 			<input className='inpSearch' onChange={handlerInputText} type='text' id='inpSeacrh' />
-			<h3 className='current-page-idx'>Page #{currentPageIdx}</h3>
-			<Pagination up={handlerNextPage} down={handlerDownPage} idx={currentPageIdx} />
+			<strong className='numberPage'>Page #{numerPage() || 1}</strong>
+			<Pagination info={info} up={handlerNextPage} down={handlerDownPage} />
 			<ul className='characterList'>
 				{results.map(({ name, status, species, gender, image, episode }, idx) => (
 					<Card
@@ -56,8 +57,7 @@ const Cardlist = () => {
 					/>
 				))}
 			</ul>
-
-			<Pagination up={handlerNextPage} down={handlerDownPage} idx={currentPageIdx} />
+			<Pagination info={info} up={handlerNextPage} down={handlerDownPage} />
 		</div>
 	);
 };
